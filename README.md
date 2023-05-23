@@ -22,7 +22,7 @@ When one-shot commands are issued, the fonction is directly called by this callb
 
 Three structures are defined to store the parameters of Flash read/write/erase, SRAM read/write and AES operation. It is mostly useful for continuous mode as the timer callback just needs to read those structs to know what functions to start with what parameters.
 
-# Porting the chip program to an other STM32 chip
+## Porting the chip program to an other STM32 chip
 
 The structure of the code should make porting as easy as possible. The *configuration.h* header file should centralize all the parameters that change from one chip to another.
 
