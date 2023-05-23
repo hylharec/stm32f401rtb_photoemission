@@ -1,4 +1,0 @@
-aes_operation.c:25:6:AES_setup	10
-aes_operation.c:79:9:AES_continuous_start	5
-aes_operation.c:115:6:AES_encrypt	6
-aes_operation.c:147:6:AES_decrypt	6

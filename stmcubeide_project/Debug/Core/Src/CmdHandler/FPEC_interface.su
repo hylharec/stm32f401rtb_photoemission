@@ -1,3 +1,0 @@
-../Core/Src/CmdHandler/FPEC_interface.c:8:6:FPEC_SectorErase	16	static
-../Core/Src/CmdHandler/FPEC_interface.c:14:6:FPEC_Program	32	static,ignoring_inline_asm
-../Core/Src/CmdHandler/FPEC_interface.c:69:6:FPEC_Lock	4	static

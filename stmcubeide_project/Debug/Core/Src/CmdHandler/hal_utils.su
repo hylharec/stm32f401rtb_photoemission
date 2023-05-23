@@ -1,6 +1,0 @@
-../Core/Src/CmdHandler/hal_utils.c:22:6:blink_LED	24	static
-../Core/Src/CmdHandler/hal_utils.c:37:6:LED_OFF	8	static
-../Core/Src/CmdHandler/hal_utils.c:46:6:LED_ON	8	static
-../Core/Src/CmdHandler/hal_utils.c:56:6:trigger_high	16	static
-../Core/Src/CmdHandler/hal_utils.c:66:6:trigger_low	16	static
-../Core/Src/CmdHandler/hal_utils.c:76:6:trigger_setup	8	static

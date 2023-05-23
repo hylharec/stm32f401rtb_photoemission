@@ -1,0 +1,11 @@
+Debug/Core/
+Debug/Drivers/
+Debug/makefile
+Debug/objects.*
+Debug/sources.mk
+
+Release/Core/
+Release/Drivers/
+Release/makefile
+Release/objects.*
+Release/sources.mk

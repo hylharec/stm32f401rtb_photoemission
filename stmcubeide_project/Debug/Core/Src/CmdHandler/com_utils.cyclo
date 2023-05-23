@@ -1,4 +1,0 @@
-com_utils.c:11:6:send_answer	2
-com_utils.c:19:6:split_cmds	2
-com_utils.c:32:6:send_ok	1
-com_utils.c:37:6:send_invalid_cmd	1

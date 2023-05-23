@@ -1,4 +1,0 @@
-../Core/Src/CmdHandler/utils.c:15:6:do_NOP	24	static,ignoring_inline_asm
-../Core/Src/CmdHandler/utils.c:29:6:str2num	24	static
-../Core/Src/CmdHandler/utils.c:38:6:hex2bytes	32	static
-../Core/Src/CmdHandler/utils.c:56:6:bytes2hex	32	static

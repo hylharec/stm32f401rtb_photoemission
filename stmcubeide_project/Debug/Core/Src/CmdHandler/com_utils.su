@@ -1,4 +1,0 @@
-../Core/Src/CmdHandler/com_utils.c:11:6:send_answer	16	static
-../Core/Src/CmdHandler/com_utils.c:19:6:split_cmds	16	static
-../Core/Src/CmdHandler/com_utils.c:32:6:send_ok	8	static
-../Core/Src/CmdHandler/com_utils.c:37:6:send_invalid_cmd	40	static
