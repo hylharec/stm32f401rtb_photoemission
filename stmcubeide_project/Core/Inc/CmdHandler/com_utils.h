@@ -2,7 +2,7 @@
   ******************************************************************************
   * @file           : uart_utils.h
   * @brief          : Header for uart_utils.c file.
-  * @author         : Raphael Viera (raphael.viera@emse.fr)
+  * @author         : Hugo Perrin (h.perrin@emse.fr)
   ******************************************************************************
 */
 
@@ -24,7 +24,6 @@ extern uint8_t Rx_data[RX_LEN];
 extern uint8_t Rx_data_copy[RX_LEN];
 extern char *cmds[10];
 
-extern SPI_HandleTypeDef *spi;
 extern UART_HandleTypeDef *uart;
 
 #endif

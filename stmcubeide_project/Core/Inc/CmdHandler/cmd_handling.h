@@ -21,7 +21,7 @@
 
 // Prototypes
 
-void Init_Cmd_Handling(TIM_HandleTypeDef *p_timer, UART_HandleTypeDef *p_uart, DMA_HandleTypeDef *p_dma_uart_tx, SPI_HandleTypeDef *p_spi);
+void Init_Cmd_Handling(TIM_HandleTypeDef *p_timer, UART_HandleTypeDef *p_uart, DMA_HandleTypeDef *p_dma_uart_tx);
 void Start_Cmd_Reception(void);
 void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart);
 void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim);
@@ -39,7 +39,6 @@ enum State {
 
 // Variables declaration
 
-extern SPI_HandleTypeDef *spi;
 extern TIM_HandleTypeDef *timer;
 extern UART_HandleTypeDef *uart;
 extern DMA_HandleTypeDef *dma_uart_tx;

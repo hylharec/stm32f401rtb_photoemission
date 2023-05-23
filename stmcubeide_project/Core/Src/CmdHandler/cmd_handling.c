@@ -17,7 +17,6 @@ uint8_t Rx_data[RX_LEN];
 uint8_t Rx_data_copy[RX_LEN];
 char *cmds[10];
 
-SPI_HandleTypeDef *spi;
 TIM_HandleTypeDef *timer;
 UART_HandleTypeDef *uart;
 DMA_HandleTypeDef *dma_uart_tx;
@@ -28,8 +27,7 @@ DMA_HandleTypeDef *dma_uart_tx;
  * It will associate the timer, uart and dma tx channel to the right pointers (to make it easier to port code to
  * other STM microcontrollers or to change which timer/uart is being used).
  **/
-void Init_Cmd_Handling(TIM_HandleTypeDef *p_timer, UART_HandleTypeDef *p_uart, DMA_HandleTypeDef *p_dma_uart_tx, SPI_HandleTypeDef *p_spi) {
-  spi = p_spi;
+void Init_Cmd_Handling(TIM_HandleTypeDef *p_timer, UART_HandleTypeDef *p_uart, DMA_HandleTypeDef *p_dma_uart_tx) {
   timer = p_timer;
   uart = p_uart;
   dma_uart_tx = p_dma_uart_tx;
