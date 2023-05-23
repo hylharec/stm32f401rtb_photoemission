@@ -1,0 +1,4 @@
+utils.c:15:6:do_NOP	2
+utils.c:29:6:str2num	1
+utils.c:38:6:hex2bytes	3
+utils.c:56:6:bytes2hex	3

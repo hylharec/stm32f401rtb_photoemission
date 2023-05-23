@@ -1,0 +1,4 @@
+sram_operation.c:12:6:SRAM_continuous_start	4
+sram_operation.c:51:6:SRAM_oneshot	4
+sram_operation.c:91:6:SRAM_write	8
+sram_operation.c:129:6:SRAM_read	8

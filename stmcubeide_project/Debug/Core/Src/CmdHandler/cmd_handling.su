@@ -1,0 +1,8 @@
+../Core/Src/CmdHandler/cmd_handling.c:31:6:Init_Cmd_Handling	24	static
+../Core/Src/CmdHandler/cmd_handling.c:38:6:Start_Cmd_Reception	8	static
+../Core/Src/CmdHandler/cmd_handling.c:43:6:HAL_UART_RxCpltCallback	24	static
+../Core/Src/CmdHandler/cmd_handling.c:157:6:HAL_TIM_PeriodElapsedCallback	16	static
+../Core/Src/CmdHandler/cmd_handling.c:198:5:cmd_is	24	static
+../Core/Src/CmdHandler/cmd_handling.c:203:6:Update_Timer_Prescaler	16	static
+../Core/Src/CmdHandler/cmd_handling.c:219:6:Update_Timer_PwmWidth	48	static
+../Core/Src/CmdHandler/cmd_handling.c:237:6:Update_Timer_Autoreload	16	static

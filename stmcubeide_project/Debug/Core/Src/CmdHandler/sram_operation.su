@@ -1,0 +1,4 @@
+../Core/Src/CmdHandler/sram_operation.c:12:6:SRAM_continuous_start	24	static
+../Core/Src/CmdHandler/sram_operation.c:51:6:SRAM_oneshot	24	static
+../Core/Src/CmdHandler/sram_operation.c:91:6:SRAM_write	80	static,ignoring_inline_asm
+../Core/Src/CmdHandler/sram_operation.c:129:6:SRAM_read	40	static,ignoring_inline_asm
