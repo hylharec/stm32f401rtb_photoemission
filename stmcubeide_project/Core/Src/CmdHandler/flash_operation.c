@@ -134,7 +134,7 @@ void FLASH_write(uint8_t verbose) {
 
     FPEC_Program(flash_op_context.addr, (uint32_t) flash_op_context.data, flash_op_context.do_trig, flash_op_context.span);
 
-    flash_op_context.configured = 0; // clear context
+    //flash_op_context.configured = 0; // clear context //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     if (verbose)
       send_ok();
   }
@@ -149,16 +149,18 @@ void FLASH_read(uint8_t verbose) {
     if (flash_op_context.do_trig)
     {
       // Read back the memory content
-      ASM_TRIGGER_HIGH();
+      /*ASM_TRIGGER_HIGH();
       __asm("NOP");
-      __asm("NOP");
+      __asm("NOP");*/
+      trigger_high(2);
 
       uint32_t i;
       for (i = 0; i < flash_op_context.span; i++)
         flash_op_context.data = *((volatile uint32_t*) (flash_op_context.addr + 4 * i));
 
-      __asm("NOP");
-      ASM_TRIGGER_LOW();
+      /*__asm("NOP");
+      ASM_TRIGGER_LOW();*/
+      trigger_low(1);
     }
     else
     {
@@ -170,7 +172,7 @@ void FLASH_read(uint8_t verbose) {
     char read_value_str[11];
     sprintf(read_value_str, "%08X\r\n", (unsigned int) flash_op_context.data);
 
-    flash_op_context.configured = 0; // clear context
+    //flash_op_context.configured = 0; // clear context
 
     // Send the value read back to UART
     if (verbose)

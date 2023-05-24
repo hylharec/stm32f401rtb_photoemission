@@ -37,19 +37,21 @@ void FPEC_Program(uint32* Copy_u32Address, uint32 Copy_u32Data, u16 use_trigger,
   if(use_trigger == 1)
   {
     //D11_GPIO_Port->BSRR = D11_Pin; // Set trigger pin high
-    ASM_TRIGGER_HIGH();
+    /*ASM_TRIGGER_HIGH();
     __asm("NOP");
     __asm("NOP");
     __asm("NOP");
     __asm("NOP");
-    __asm("NOP");
+    __asm("NOP");*/
+    trigger_high(5);
 
     uint32_t i;
     for (i = 0; i < span; i++)
       *((volatile uint32_t*) (Copy_u32Address + 4 * i)) = Copy_u32Data;  // Write word in Flash
 
-    __asm("NOP");
-    ASM_TRIGGER_LOW();
+    /*__asm("NOP");
+    ASM_TRIGGER_LOW();*/
+    trigger_low(1);
   }
   else
   {

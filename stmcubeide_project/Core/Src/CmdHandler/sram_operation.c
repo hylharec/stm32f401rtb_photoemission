@@ -119,7 +119,7 @@ void SRAM_write(uint8_t verbose) {
 
     }
 
-    sram_op_context.configured = 0; // clear context
+    //sram_op_context.configured = 0; // clear context
     if (verbose) {
       send_ok();
     }
@@ -159,7 +159,7 @@ void SRAM_read(uint8_t verbose) {
     char read_value_str[11];
     sprintf(read_value_str, "%08X\r\n", (unsigned int) sram_op_context.data);
 
-    sram_op_context.configured = 0; // clear context
+    //sram_op_context.configured = 0; // clear context
     // Send the value read back to UART
     if (verbose) {
       send_answer(read_value_str, sizeof(read_value_str));

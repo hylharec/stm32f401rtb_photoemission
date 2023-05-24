@@ -46,6 +46,8 @@ void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart) {
     // Split cmd string into an array of strings
     split_cmds();
 
+    send_ok();
+
     if (state == CONTINUOUS_IN_PROGRESS) {
 
       if (cmd_is(0, "STOP", 4)) {
