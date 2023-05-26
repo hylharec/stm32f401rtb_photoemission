@@ -134,18 +134,27 @@ if __name__ == "__main__":
     #time.sleep(5)
     #dut.stop_continuous()
 
-    aes_test()
+    #aes_test()
 
     #sram_test()
     #flash_test()
     #dut.flash_write("0801C1F0", "0F0F0F0F")
     #aes_test()
+
     #dut.update_timer(10, 0.50, 4000)
+
     #dut.flash_erase(4, True)
     #dut.flash_write("08040000", "00000000", False, 2048, True)
-    dut.flash_read("08040000", False, 1, False)
-    input("Press key to stop continuous...")
-    dut.stop_continuous()
+
+    dut.sram_read("20000F00", True, 1, 0, False)
+    dut.sram_write("20000F00", "12345678", True, 1, 0, False)
+    dut.sram_write("20000F04", "9ABCDEF0", True, 1, 0, False)
+    dut.sram_read("20000F00", True, 1, 0, False)
+    dut.sram_read("20000F00", True, 2, 0, False)
+
+    #dut.sram_write("2000C1F0", "0000DCD0", True, 4, 5, True)
+    #input("Press key to stop continuous...")
+    #dut.stop_continuous()
 
     #    #for i in range(300):
     #    #    for j in range(500):

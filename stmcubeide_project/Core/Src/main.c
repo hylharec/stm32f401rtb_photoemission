@@ -109,10 +109,6 @@ int main(void)
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
-    trigger_high(1);
-    HAL_Delay(500);
-    trigger_low(1);
-    HAL_Delay(500);
   }
   /* USER CODE END 3 */
 }

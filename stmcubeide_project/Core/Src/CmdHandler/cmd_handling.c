@@ -46,8 +46,6 @@ void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart) {
     // Split cmd string into an array of strings
     split_cmds();
 
-    send_ok();
-
     if (state == CONTINUOUS_IN_PROGRESS) {
 
       if (cmd_is(0, "STOP", 4)) {
@@ -145,6 +143,7 @@ void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart) {
       else if (cmd_is(0, "AES_DECRYPT", 11)) {
         AES_decrypt(1);
       }
+
       else {
         send_answer("Error: Unknown cmd\r\n", 20);
       }
