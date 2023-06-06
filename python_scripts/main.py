@@ -136,6 +136,11 @@ if __name__ == "__main__":
 
     #aes_test()
 
+    dut.flash_read("08040000", word_span=3)
+    dut.flash_read("08040000")
+    dut.flash_read("08040004")
+    dut.flash_read("08040008")
+
     #sram_test()
     #flash_test()
     #dut.flash_write("0801C1F0", "0F0F0F0F")
@@ -146,11 +151,20 @@ if __name__ == "__main__":
     #dut.flash_erase(4, True)
     #dut.flash_write("08040000", "00000000", False, 2048, True)
 
-    dut.sram_read("20000F00", True, 1, 0, False)
-    dut.sram_write("20000F00", "12345678", True, 1, 0, False)
-    dut.sram_write("20000F04", "9ABCDEF0", True, 1, 0, False)
-    dut.sram_read("20000F00", True, 1, 0, False)
-    dut.sram_read("20000F00", True, 2, 0, False)
+    #dut.sram_read("20000F00", True, 1, 0, False)
+    #dut.sram_write("20000F00", "12345678", True, 1, 0, False)
+    #dut.sram_write("20000F04", "9ABCDEF0", True, 1, 0, False)
+    #dut.sram_read("20000F00", True, 1, 0, False)
+    #dut.sram_read("20000F00", True, 2, 0, False)
+
+    #dut.sram_write(
+    #    addr="2000903C",
+    #    data="00000000",
+    #    trig=True,
+    #    word_span=1,
+    #    nb_nops=1,
+    #    continuous=False
+    #)
 
     #dut.sram_write("2000C1F0", "0000DCD0", True, 4, 5, True)
     #input("Press key to stop continuous...")

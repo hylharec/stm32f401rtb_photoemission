@@ -107,34 +107,8 @@ void FLASH_write(uint8_t verbose) {
       send_answer("Error: undefined flash op context\r\n", 34);
   }
   else {
-    // Erase corresponding sector before writing (Warning: Only checks sector of starting address)
-    int sector = 0;
-    if (flash_op_context.addr > (uint32_t *) SECTOR_7) {
-      sector = 7;
-    }
-    else if (flash_op_context.addr > (uint32_t *) SECTOR_6) {
-      sector = 6;
-    }
-    else if (flash_op_context.addr > (uint32_t *) SECTOR_5) {
-      sector = 5;
-    }
-    else if (flash_op_context.addr > (uint32_t *) SECTOR_4) {
-      sector = 4;
-    }
-    else if (flash_op_context.addr > (uint32_t *) SECTOR_3) {
-      sector = 3;
-    }
-    else if (flash_op_context.addr > (uint32_t *) SECTOR_2) {
-      sector = 2;
-    }
-    else if (flash_op_context.addr > (uint32_t *) SECTOR_1) {
-      sector = 1;
-    }
-    FPEC_SectorErase(sector);
-
     FPEC_Program(flash_op_context.addr, (uint32_t) flash_op_context.data, flash_op_context.do_trig, flash_op_context.span);
 
-    flash_op_context.configured = 0; // clear context //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     if (verbose)
       send_ok();
   }
@@ -149,30 +123,23 @@ void FLASH_read(uint8_t verbose) {
     if (flash_op_context.do_trig)
     {
       // Read back the memory content
-      /*ASM_TRIGGER_HIGH();
-      __asm("NOP");
-      __asm("NOP");*/
       trigger_high(2);
 
       uint32_t i;
       for (i = 0; i < flash_op_context.span; i++)
-        flash_op_context.data = *((volatile uint32_t*) (flash_op_context.addr + 4 * i));
+        flash_op_context.data = *((volatile uint32_t*) (flash_op_context.addr + i));
 
-      /*__asm("NOP");
-      ASM_TRIGGER_LOW();*/
       trigger_low(1);
     }
     else
     {
       uint32_t i;
       for (i = 0; i < flash_op_context.span; i++)
-        flash_op_context.data = *((volatile uint32_t*) (flash_op_context.addr + 4 * i));
+        flash_op_context.data = *((volatile uint32_t*) (flash_op_context.addr + i));
     }
 
     char read_value_str[11];
     sprintf(read_value_str, "%08X\r\n", (unsigned int) flash_op_context.data);
-
-    //flash_op_context.configured = 0; // clear context
 
     // Send the value read back to UART
     if (verbose)
@@ -182,8 +149,8 @@ void FLASH_read(uint8_t verbose) {
 
 void FLASH_erase(uint8_t verbose) {
   // sector in [0; 7]
-  if (7 < flash_op_context.sector) {
-    flash_op_context.sector = 7;
+  if (5 < flash_op_context.sector) {
+    flash_op_context.sector = 5;
   }
 
   FPEC_SectorErase(flash_op_context.sector);

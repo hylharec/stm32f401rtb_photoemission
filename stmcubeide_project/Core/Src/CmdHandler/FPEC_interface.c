@@ -4,7 +4,7 @@
 
 #include "FPEC_interface.h"
 
-/* There are 7 Flash mem sectors */
+/* There are 5 Flash mem sectors */
 void FPEC_SectorErase(u8 Copy_u8SectorNumber)
 {
   FLASH_Erase_Sector(Copy_u8SectorNumber, 0x00000002U);
@@ -36,7 +36,6 @@ void FPEC_Program(uint32* Copy_u32Address, uint32 Copy_u32Data, u16 use_trigger,
   // Use output trigger signal or not
   if(use_trigger == 1)
   {
-    //D11_GPIO_Port->BSRR = D11_Pin; // Set trigger pin high
     /*ASM_TRIGGER_HIGH();
     __asm("NOP");
     __asm("NOP");
@@ -47,7 +46,7 @@ void FPEC_Program(uint32* Copy_u32Address, uint32 Copy_u32Data, u16 use_trigger,
 
     uint32_t i;
     for (i = 0; i < span; i++)
-      *((volatile uint32_t*) (Copy_u32Address + 4 * i)) = Copy_u32Data;  // Write word in Flash
+      *((volatile uint32_t*) (Copy_u32Address + i)) = Copy_u32Data;
 
     /*__asm("NOP");
     ASM_TRIGGER_LOW();*/
@@ -57,7 +56,7 @@ void FPEC_Program(uint32* Copy_u32Address, uint32 Copy_u32Data, u16 use_trigger,
   {
     uint32_t i;
     for (i = 0; i < span; i++)
-      *((volatile uint32_t*) (Copy_u32Address + 4 * i)) = Copy_u32Data;  // Write word in Flash
+      *((volatile uint32_t*) (Copy_u32Address + i)) = Copy_u32Data;
   }
 
   // Wait Busy Flag

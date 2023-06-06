@@ -98,26 +98,26 @@ void SRAM_write(uint8_t verbose) {
   else {
     if (sram_op_context.do_trig)
     {
-        //D11_GPIO_Port->BSRR = D11_Pin; // Set trigger pin high
-
-      for(i = 0; i < sram_op_context.span; ++i) {
-        //ASM_TRIGGER_HIGH();
-        trigger_high(1);
-        for(j = 0; j < sram_op_context.nb_nops; ++j) {
+      uint32_t val = 0x00000000;
+      trigger_high(1);
+      while(1) {
+        for(i = 0; i < sram_op_context.span; ++i) {
+          trigger_high(0);
+          for(j = 0; j < sram_op_context.nb_nops; ++j) {
+            __asm("NOP");
+          }
+          *(sram_op_context.addr + i) = sram_op_context.data;
           __asm("NOP");
+          trigger_low(0);
         }
-        //*(sram_op_context.addr + i) = sram_op_context.data;
-        *(sram_op_context.addr + i) = ~*(sram_op_context.addr + i);
-        __asm("NOP");
-        //ASM_TRIGGER_LOW();
-        trigger_low(1);
+        //val = val ^ sram_op_context.data; // Only commute bit of mask sent through uart
       }
     }
     else
     {
 
       for(i = 0; i < sram_op_context.span; ++i) {
-        *(sram_op_context.addr + i) = sram_op_context.data;
+        *((volatile uint32_t *) sram_op_context.addr + i) = sram_op_context.data;
       }
 
     }

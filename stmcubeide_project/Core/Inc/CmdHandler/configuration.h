@@ -50,8 +50,6 @@ __asm("STR r2, [r3, #0x18]"); /* Apply mask on GPIO BSRR register */\
 #define SECTOR_3 0x0800C000
 #define SECTOR_4 0x08010000
 #define SECTOR_5 0x08020000
-#define SECTOR_6 0x08040000
-#define SECTOR_7 0x08060000
 // =============================================================================================
 // The following structures and defines are related to the Flash interface registers of the
 // target STM32. They might differ from one to the other.

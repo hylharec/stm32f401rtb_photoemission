@@ -166,11 +166,13 @@ class NucleoF446RE:
 
     def flash_erase(self, sector: int, continuous: bool = False):
         """
-        The device will erase the given page in Flash mem.
+        The device will erase the given sector in Flash mem.
+        Warning: Some sectors contain program instructions and erasing them will require reflashing the chip.
+        Warning: The FLASH is only rated for a limited number of erase operations. Going overboard can cause damage.
         """
-        sector_clamped = max(min(sector, 7), 0)
+        sector_clamped = max(min(sector, 5), 0)
         if sector != sector_clamped:
-            print(f"Warning: page num was clamped: {sector} -> {sector_clamped}")
+            print(f"Warning: sector num was clamped: {sector} -> {sector_clamped}")
 
         if not continuous:
             s = f"ONESHOT>FLASH>erase>{sector_clamped}"
