@@ -23,21 +23,27 @@ DMA_HandleTypeDef *dma_uart_tx;
 
 // Functions definition
 
-/* It is mandatory to call this function in main before any other function of this file is called.
+/*
+ * It is mandatory to call this function in main before any other function of this file is called.
  * It will associate the timer, uart and dma tx channel to the right pointers (to make it easier to port code to
  * other STM microcontrollers or to change which timer/uart is being used).
- **/
+ */
 void Init_Cmd_Handling(TIM_HandleTypeDef *p_timer, UART_HandleTypeDef *p_uart, DMA_HandleTypeDef *p_dma_uart_tx) {
   timer = p_timer;
   uart = p_uart;
   dma_uart_tx = p_dma_uart_tx;
 }
 
+/* It is mendatory to call this function after Init_Cmd_Handling() was called for the UART interruption to be fired.
+ *
+ */
 void Start_Cmd_Reception(void) {
   HAL_UART_Receive_DMA(uart, Rx_data, RX_LEN);
 }
 
-/* This callback is called by the HAL_UART_IRQHandler when the given number of bytes are received */
+/*
+ * This callback is called by the HAL_UART_IRQHandler when the given number of bytes are received .
+ */
 void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart) {
 
   // Verify that the huart that triggered the IT is the right one
@@ -153,11 +159,16 @@ void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart) {
   }
 }
 
+/*
+ * Timer overflow interruption callback. Will be enabled only when a continuous experiment was started through serial com command.
+ * Typically only one continuous experiment is configured at a time, thus only one function should be called (SRAM_write, SRAM_read, FLASH_erase, ...).
+ * When the command to stop an ongoing continuous experiment is issued through serial com, the timer's interruption is disabled and this function does not trigger
+ * anymore.
+ */
 void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim) {
   if (htim->Instance == timer->Instance) {
 
-    LED_ON();
-
+    // =================== SRAM EXPERIMENT ======================
     if (sram_op_context.configured) {
       if (sram_op_context.is_write) {
         SRAM_write(0);
@@ -166,6 +177,7 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim) {
         SRAM_read(0);
       }
     }
+    // =================== FLASH EXPERIMENT =====================
     else if (flash_op_context.configured) {
       if (flash_op_context.is_erase) {
         FLASH_erase(0);
@@ -179,6 +191,7 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim) {
         }
       }
     }
+    // =================== AES EXPERIMENT =======================
     else if (aes_op_context.configured) {
       if (aes_op_context.is_encrypt) {
         AES_encrypt(0);
@@ -187,18 +200,20 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim) {
         AES_decrypt(0);
       }
     }
-
-    while (htim->Instance->CNT < 5) ;
-    LED_OFF();
+    // =================== =============== ======================
   }
 }
 
-/* Compares cmds_from_UART[cmd_index] with cmd_ref and returns result */
+/*
+ * Compares cmds_from_UART[cmd_index] with cmd_ref and returns result.
+ */
 int cmd_is(uint8_t cmd_index, const char *cmd_ref, size_t len) {
-  return (0 == strncmp((const char*)cmds[cmd_index], cmd_ref, len));
+  return (0 == strncmp((const char *) cmds[cmd_index], cmd_ref, len));
 }
 
-/* Updates the prescaler of the timer used for continuous mode */
+/*
+ * Updates the prescaler of the timer used for continuous mode.
+ */
 void Update_Timer_Prescaler(uint16_t prescaler) {
   // Disables ITs in case they were still enabled
   HAL_TIM_PWM_Stop_IT(timer, TIM_CHANNEL_2);
@@ -215,6 +230,9 @@ void Update_Timer_Prescaler(uint16_t prescaler) {
   }
 }
 
+/*
+ * Updates the number of timer ticks during which the PWM output stays high after a timer overflow interruption.
+ */
 void Update_Timer_PwmWidth(uint16_t pulsewidth) {
   // Disables ITs in case they were still enabled
   HAL_TIM_PWM_Stop_IT(timer, TIM_CHANNEL_2);
@@ -233,6 +251,9 @@ void Update_Timer_PwmWidth(uint16_t pulsewidth) {
   }
 }
 
+/*
+ * Updates the autoreload register of the timer, effectively changing the overflow frequency.
+ */
 void Update_Timer_Autoreload(uint16_t autoreload) {
   // Disables ITs in case they were still enabled
   HAL_TIM_PWM_Stop_IT(timer, TIM_CHANNEL_2);

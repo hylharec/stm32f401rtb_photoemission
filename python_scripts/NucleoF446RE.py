@@ -1,6 +1,7 @@
 """
 The NucleoF446RE class provides a simple interface to send commands to the eponym dev board.
 Serial com parameters should match those that were flashed on the microcontroller.
+The corresponding STM32 C source code should be found within the same git repository as the python scripts.
 """
 
 import sys

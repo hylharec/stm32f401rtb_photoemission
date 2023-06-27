@@ -9,8 +9,9 @@
 
 struct FLASH_op_context flash_op_context = {0, 0, 0, 0, 0, 0, 0};
 
+
 void FLASH_continuous_start(void) {
-  // configure context structure
+  // ================================ If sector erase operation:
   if (cmd_is(2, "erase", 5)) {
     // START>FLASH>erase>sector
     flash_op_context.is_erase = 1;
@@ -18,6 +19,7 @@ void FLASH_continuous_start(void) {
     flash_op_context.sector = atoi(cmds[3]);
   }
   else {
+    // ================================ Should we rise a trigger during operation ?
     if (cmd_is(3, "trig", 4)) {
       flash_op_context.do_trig = 1;
     }
@@ -25,9 +27,11 @@ void FLASH_continuous_start(void) {
       flash_op_context.do_trig = 0;
     }
 
+    // ================================ Starting address of operation ?
     char *addr_str = cmds[4];
     str2num(addr_str, (uint32_t *) &(flash_op_context.addr), "%8x");
 
+    // ================================ If write operation:
     if (cmd_is(2, "write", 5)) {
       // START>FLASH>write>trig>0xaddr>0xdata>span
       flash_op_context.is_write = 1;
@@ -37,6 +41,7 @@ void FLASH_continuous_start(void) {
       str2num(data_str, &(flash_op_context.data), "%8x");
       flash_op_context.span = atoi(cmds[5]);
     }
+    // ================================ If read operation:
     else if (cmd_is(2, "read", 4)) {
       // START>FLASH>read>trig>0xaddr>span
       flash_op_context.is_write = 0;

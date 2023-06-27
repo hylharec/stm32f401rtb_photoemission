@@ -11,7 +11,7 @@ void FPEC_SectorErase(u8 Copy_u8SectorNumber)
 }
 
 /* Writes a word in Flash memory */
-void FPEC_Program(uint32* Copy_u32Address, uint32 Copy_u32Data, u16 use_trigger, uint32 span)
+void FPEC_Program(uint32_t* Copy_u32Address, uint32_t Copy_u32Data, uint16_t use_trigger, uint32_t span)
 {
   SET1_BIT(FPEC->CR,31); // set lock bit
 

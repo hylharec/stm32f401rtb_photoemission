@@ -10,7 +10,7 @@
 struct SRAM_op_context sram_op_context = {0, 0, 0, 0, 0, 0, 0};
 
 void SRAM_continuous_start(void) {
-  // configure context structure
+  // ================================ Should we rise a trigger during operation ?
   if (cmd_is(3, "trig", 4)) {
     sram_op_context.do_trig = 1;
   }
@@ -18,12 +18,17 @@ void SRAM_continuous_start(void) {
     sram_op_context.do_trig = 0;
   }
 
+  // ================================ Over how many consecutive addresses should we apply the operation ?
   sram_op_context.span = atoi(cmds[4]);
+
+  // ================================ How many NOP instructions should be inserted before each single operation (write/read) ?
   sram_op_context.nb_nops = atoi(cmds[5]);
 
+  // ================================ Starting address of operation ?
   char *addr_str = cmds[6];
   str2num(addr_str, (uint32_t *) &(sram_op_context.addr), "%8x");
 
+  // ================================ If write operation:
   if (cmd_is(2, "write", 5)) {
     // START>SRAM>write>trig>span>nb_nops>0xaddr>0xdata
     sram_op_context.is_write = 1;
@@ -31,6 +36,7 @@ void SRAM_continuous_start(void) {
     char *data_str = cmds[7];
     str2num(data_str, &(sram_op_context.data), "%8x");
   }
+  // ================================ If read operation:
   else if (cmd_is(2, "read", 4)) {
     // START>SRAM>read>trig>span>nb_nops>0xaddr
     sram_op_context.is_write = 0;
@@ -90,7 +96,7 @@ void SRAM_oneshot(void) {
 
 void SRAM_write(uint8_t verbose) {
   uint64_t i;
-  uint64_t j;
+  //uint64_t j;
   if (sram_op_context.configured == 0) {
     if (verbose)
       send_answer("Error: undefined sram op context\r\n", 34);
@@ -98,18 +104,23 @@ void SRAM_write(uint8_t verbose) {
   else {
     if (sram_op_context.do_trig)
     {
-      uint32_t val = 0x00000000;
+      //uint32_t val = 0x00000000;
       trigger_high(1);
       while(1) {
-        for(i = 0; i < sram_op_context.span; ++i) {
-          trigger_high(0);
-          for(j = 0; j < sram_op_context.nb_nops; ++j) {
+        //for(i = 0; i < sram_op_context.span; ++i) {
+          //ASM_TRIGGER_HIGH();
+          //trigger_high(1);
+          /*for(j = 0; j < sram_op_context.nb_nops; ++j) {
             __asm("NOP");
-          }
-          *(sram_op_context.addr + i) = sram_op_context.data;
-          __asm("NOP");
-          trigger_low(0);
-        }
+          }*/
+          //*(sram_op_context.addr + i) = sram_op_context.data;
+          //*(sram_op_context.addr + i) = ~*(sram_op_context.addr + i);
+        *((volatile uint32_t *) sram_op_context.addr) = 0x00000000;
+        *((volatile uint32_t *) sram_op_context.addr) = 0xFFFFFFFF;
+          //__asm("NOP");
+          //ASM_TRIGGER_LOW();
+          //trigger_low(1);
+        //}
         //val = val ^ sram_op_context.data; // Only commute bit of mask sent through uart
       }
     }

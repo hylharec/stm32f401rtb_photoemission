@@ -111,8 +111,11 @@ int main(void)
     /* USER CODE BEGIN 3 */
     // Have the CPU Write in registers as much as possible for photoemission imaging
     // Arm Cortex M4 : 3 stage pipeline
-    //__asm("MOV r2, #0");
-    //__asm("MOV.W r2, #4294967295");
+    //__asm("NOP");
+    //ASM_TRIGGER_HIGH();
+    //ASM_TRIGGER_LOW();
+
+    //__WFI();
   }
   /* USER CODE END 3 */
 }

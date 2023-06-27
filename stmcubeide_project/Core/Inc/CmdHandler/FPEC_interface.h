@@ -40,7 +40,7 @@ Description: Write a data word
 Input: address ,data and trigger usage
 output:void
 */
-void FPEC_Program(uint32* Copy_u32Address, uint32 Copy_u32Data, u16 use_trigger, uint32 span);
+void FPEC_Program(uint32_t* Copy_u32Address, uint32_t Copy_u32Data, uint16_t use_trigger, uint32_t span);
 
 
 void FPEC_Lock();
