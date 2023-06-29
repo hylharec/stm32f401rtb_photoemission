@@ -5,13 +5,13 @@ raising an interrupt that handles the received command.
 """
 
 import time
-from NucleoF446RE import NucleoF446RE
+from python_scripts.NucleoF4 import NucleoF4
 
 if __name__ == "__main__":
     # ################################################
     # Beginning of program
 
-    dut = NucleoF446RE(
+    dut = NucleoF4(
         "/dev/ttyACM0",
         9600,
         timeout=500.0,

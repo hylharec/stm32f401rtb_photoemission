@@ -1,5 +1,5 @@
 """
-The NucleoF446RE class provides a simple interface to send commands to the eponym dev board.
+The NucleoF4 class provides a simple interface to send commands to the eponym dev board.
 Serial com parameters should match those that were flashed on the microcontroller.
 The corresponding STM32 C source code should be found within the same git repository as the python scripts.
 """
@@ -7,7 +7,7 @@ The corresponding STM32 C source code should be found within the same git reposi
 import sys
 import serial
 
-class NucleoF446RE:
+class NucleoF4:
     def __init__(self, port: str, baud: int = 9600, timeout: float = 0.1, rtscts: bool = False, APB1_freqMHz: float = 16000000) -> None:
         """
         APB1_freqMHz parameter is not sent to target, it needs to be set according to configuration flashed on
